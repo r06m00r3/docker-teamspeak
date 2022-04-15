@@ -88,4 +88,4 @@ then
 fi
 
 export LD_LIBRARY_PATH=".:${LD_LIBRARY_PATH}"
-exec "${SU_APP}" teamspeak:teamspeak tini -- ./ts3server "$@"
+exec "${SU_APP}" teamspeak:teamspeak tini -- ./ts3server serveradmin_password="${TS_ADMIN_PASS}" "$@" & forever -MAX 10000 /opt/bot/do_bot_things.js
