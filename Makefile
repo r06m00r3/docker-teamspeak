@@ -9,10 +9,10 @@ build-fresh:
 	docker build --no-cache -t ${IMAGE}:${TAG} .
 
 run:
-	docker run -it -v ${LOCAL_DATA}:/data -p 9987:9987/udp -p 10011:10011 -p 30033:30033 -p 41144:41144 --env-file .env ${IMAGE}:latest
+	docker run --rm -it -v ${LOCAL_DATA}:/data -p 9987:9987/udp -p 10011:10011 -p 30033:30033 -p 41144:41144 --env-file .env ${IMAGE}:latest
 
 run-local:
-	docker run -it -v ${LOCAL_DATA}:/data -p 9987:9987/udp -p 10011:10011 -p 30033:30033 -p 41144:41144 --env-file .env ${IMAGE}:${TAG}
+	docker run --rm -it -v ${LOCAL_DATA}:/data -p 9987:9987/udp -p 10011:10011 -p 30033:30033 -p 41144:41144 --env-file .env ${IMAGE}:${TAG}
 
 tag:
 	docker tag ${IMAGE}:${TAG} ${IMAGE}:latest
