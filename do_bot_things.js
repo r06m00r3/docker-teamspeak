@@ -1,12 +1,12 @@
 // imports //////////////////////////////////////////////////////////////////////////////
 const { TeamSpeak } = require("ts3-nodejs-library")
-const { Client, Intents, MessageEmbed, RateLimitError } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const sqlite = require('better-sqlite3');
 require('dotenv');
 
 // declare constants ////////////////////////////////////////////////////////////////////
 const db = sqlite('/data/disco-bot.db');
-const discord = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const discord = new Client({ intents: [GatewayIntentBits.Guilds] });
 const ts_config = {
     "host": "localhost",
     "queryport": 10011,
@@ -47,7 +47,7 @@ async function setChannelName(clients, channel, state) {
         state.lastCount = clients.length
         var icon = (clients.length > 0 ? '🔊' : '🔈')
         try {
-            await channel.setName(`${icon}tac-1-3`)
+            await channel.setName(`${icon}${process.env.CHANNEL_BASE_NAME}`)
             log('Set channel name.')
         } catch {
             log('WARNING: could not set channel name', true)
@@ -61,7 +61,7 @@ function makeEmbed(clients) {
         clientList += ("\n  - " + client.nickname)
     })
     const content = '>>> Client Count: ' + clients.length + (clients.length > 0 ? '\nClients:' + clientList : '')
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setTitle('TS3 Server Details')
         .setDescription(content)
     return embed
